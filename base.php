@@ -1381,10 +1381,10 @@ final class Base extends Prefab implements ArrayAccess {
 		if (!$url)
 			$url=$this->rel($this->hive['URI']);
 		$case=$this->hive['CASELESS']?'i':'';
-		preg_match('/^'.
-			preg_replace('/((\\\{)?@(\w+\b)(?(2)\\\}))/','(?P<\3>[^\/\?]+)',
-			str_replace('\*','([^\?]+)',preg_quote($pattern,'/'))).
-				'\/?(?:\?.*)?$/'.$case.'um',$url,$args);
+		if (!preg_match('/^'.
+				str_replace('/', '\/', preg_replace('/@(\w+\b)\((.*?)\)/','(?P<\1>\2)',
+				str_replace('\*','(.*)', $url))).
+				'\/?(?:\?.*)?$/'.$case.'um',$req,$args));
 		return $args;
 	}
 
